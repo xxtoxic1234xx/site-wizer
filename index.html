@@ -1,0 +1,232 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Hacker Style</title>
+    <style>
+        /* Style de base */
+        body {
+            background-color: black;
+            color: #00ff00;
+            font-family: 'Courier New', monospace;
+            text-align: center;
+            overflow: hidden;
+        }
+
+        /* Effet de code en cascade pour l'ensemble de la page */
+        .background-matrix {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+            opacity: 0.3;
+            z-index: -1;
+        }
+
+        /* Ligne de chiffres en cascade, étendue sur toute la largeur */
+        .matrix-line {
+            position: absolute; /* Permet de positionner les lignes partout */
+            width: 100%; /* Largeur de 100% pour occuper toute la page */
+            text-align: center;
+            color: #00ff00;
+            animation: fall 3s linear infinite;
+            font-size: 1.5em; /* Augmente la taille des chiffres pour plus de visibilité */
+            white-space: nowrap; /* Empêche le retour à la ligne */
+        }
+
+        @keyframes fall {
+            0% { transform: translateY(-100%); opacity: 1; }
+            100% { transform: translateY(100%); opacity: 0; }
+        }
+
+        /* Positionnement aléatoire des lignes */
+        .matrix-line:nth-child(odd) {
+            left: 0%; /* Positionne à gauche */
+        }
+        .matrix-line:nth-child(even) {
+            left: 50%; /* Positionne au centre */
+        }
+
+        /* Texte d'introduction */
+        .intro {
+            font-size: 1.5em;
+            animation: typing 3s steps(30, end), blink 0.5s step-end infinite alternate;
+            white-space: nowrap;
+            overflow: hidden;
+            border-right: 4px solid #00ff00;
+            margin-top: 20px;
+        }
+
+        @keyframes typing {
+            from { width: 0; }
+            to { width: 100%; }
+        }
+
+        @keyframes blink {
+            50% { border-color: transparent; }
+        }
+
+        /* Effet de bouton Discord */
+        .discord-button {
+            background-color: #00ff00;
+            color: black;
+            padding: 15px 30px;
+            border: none;
+            border-radius: 5px;
+            font-size: 1.2em;
+            cursor: pointer;
+            transition: box-shadow 0.3s ease, transform 0.2s;
+            margin-top: 50px;
+        }
+
+        .discord-button:hover {
+            box-shadow: 0 0 20px #00ff00;
+            transform: scale(1.05);
+        }
+
+        /* Animation de fond lumineux */
+        .glow-background {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: radial-gradient(circle, rgba(0,255,0,0.15), transparent 70%);
+            animation: pulse 5s infinite alternate;
+            pointer-events: none;
+            z-index: -2;
+        }
+
+        @keyframes pulse {
+            from { transform: scale(1); }
+            to { transform: scale(1.1); }
+        }
+
+        /* Terminal simulé avec effet de machine à écrire */
+        .terminal {
+            background-color: rgba(0, 0, 0, 0.8);
+            padding: 20px;
+            margin: 20px auto;
+            width: 80%;
+            max-width: 600px;
+            color: #00ff00;
+            text-align: left;
+            font-size: 1em;
+            line-height: 1.5;
+            border: 1px solid #00ff00;
+            overflow: hidden;
+            white-space: pre-wrap;
+            animation: fadeIn 2s ease;
+        }
+
+        /* Animation du texte ligne par ligne */
+        .line {
+            opacity: 0;
+            animation: typingLine 1.5s steps(30, end) forwards;
+        }
+
+        /* Délai d’apparition progressive des lignes */
+        .line:nth-child(1) { animation-delay: 0.5s; }
+        .line:nth-child(2) { animation-delay: 3s; }
+        .line:nth-child(3) { animation-delay: 5s; }
+        .line:nth-child(4) { animation-delay: 7s; }
+
+        @keyframes typingLine {
+            from { opacity: 0; width: 0; }
+            to { opacity: 1; width: 100%; }
+        }
+    </style>
+</head>
+<body>
+    <!-- Fond de code en cascade -->
+    <div class="background-matrix">
+        <!-- Ajouter plusieurs lignes de chiffres pour un effet plein -->
+        <div class="matrix-line">1010101010101</div>
+        <div class="matrix-line">0101010101010</div>
+        <div class="matrix-line">1100101010101</div>
+        <div class="matrix-line">0110101010110</div>
+        <div class="matrix-line">1010101010101</div>
+        <div class="matrix-line">0101010101010</div>
+        <div class="matrix-line">1100101010101</div>
+        <div class="matrix-line">0110101010110</div>
+        <div class="matrix-line">1010101010101</div>
+        <div class="matrix-line">0101010101010</div>
+        <div class="matrix-line">1100101010101</div>
+        <div class="matrix-line">0110101010110</div>
+        <div class="matrix-line">1010101010101</div>
+        <div class="matrix-line">0101010101010</div>
+        <div class="matrix-line">1100101010101</div>
+        <div class="matrix-line">0110101010110</div>
+        <div class="matrix-line">1010101010101</div>
+        <div class="matrix-line">0101010101010</div>
+        <div class="matrix-line">1100101010101</div>
+        <div class="matrix-line">0110101010110</div>
+        <div class="matrix-line">1010101010101</div>
+        <div class="matrix-line">0101010101010</div>
+    </div>
+
+    <!-- Glow en fond -->
+    <div class="glow-background"></div>
+
+    <!-- Texte d’introduction -->
+    <div class="intro">Bienvenue dans le système... Analyse en cours...</div>
+
+    <!-- Terminal simulé avec effet machine à écrire -->
+    <div class="terminal">
+        <p class="line">&gt; Initialisation du système...</p>
+        <p class="line">&gt; Accès au serveur distant en cours...</p>
+        <p class="line">&gt; Chargement des protocoles de sécurité...</p>
+        <p class="line">&gt; Accès confirmé.</p>
+    </div>
+
+    <!-- Fichiers audio -->
+    <audio id="buttonSound" src="c:\Users\gaspa\Desktop\site\clic.mp3"></audio>
+    
+
+    <!-- Bouton Discord avec ouverture dans un nouvel onglet -->
+    <button class="discord-button" onclick="playSound('buttonSound'); window.open('https://discord.com/users/1162459344005247047', '_blank')">
+        Add me on Discord
+    </button>
+
+    <script>
+        // Fonction pour jouer le son de clavier
+        function playTypingSound() {
+            const sound = document.getElementById('keyboardSound');
+            sound.currentTime = 0;
+            sound.play();
+        }
+
+        // Fonction pour jouer le son du bouton
+        function playSound(soundId) {
+            const sound = document.getElementById(soundId);
+            sound.currentTime = 0;
+            sound.play();
+        }
+
+        // Fonction pour démarrer le bruit de clavier dès l'ouverture de la page
+        function startTypingSounds() {
+            const interval = setInterval(playTypingSound, 500); // Joue le son toutes les 500 ms
+
+            // Arrêter le son lorsque toutes les lignes sont affichées
+            const totalLines = document.querySelectorAll('.line').length;
+            const totalDuration = totalLines * 1500; // Calcule la durée totale en ms
+
+            setTimeout(() => clearInterval(interval), totalDuration);
+        }
+
+        // Lancer le son de clavier et les animations dès l'ouverture de la page
+        window.onload = () => {
+            startTypingSounds();
+            const lines = document.querySelectorAll('.line');
+            lines.forEach((line, index) => {
+                setTimeout(() => {
+                    line.classList.add('played');
+                }, index * 1500);
+            });
+        };
+    </script>
+</body>
+</html>
