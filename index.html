@@ -12,61 +12,89 @@
             font-family: 'Courier New', monospace;
             text-align: center;
             overflow: hidden;
+            position: relative; /* Pour le positionnement du texte défilant */
         }
 
-        /* Effet de code en cascade pour l'ensemble de la page */
-        .background-matrix {
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            pointer-events: none;
-            opacity: 0.3;
-            z-index: -1;
-        }
-
-        /* Ligne de chiffres en cascade, étendue sur toute la largeur */
-        .matrix-line {
-            position: absolute; /* Permet de positionner les lignes partout */
-            width: 100%; /* Largeur de 100% pour occuper toute la page */
-            text-align: center;
-            color: #00ff00;
-            animation: fall 3s linear infinite;
-            font-size: 1.5em; /* Augmente la taille des chiffres pour plus de visibilité */
-            white-space: nowrap; /* Empêche le retour à la ligne */
-        }
-
-        @keyframes fall {
-            0% { transform: translateY(-100%); opacity: 1; }
-            100% { transform: translateY(100%); opacity: 0; }
-        }
-
-        /* Positionnement aléatoire des lignes */
-        .matrix-line:nth-child(odd) {
-            left: 0%; /* Positionne à gauche */
-        }
-        .matrix-line:nth-child(even) {
-            left: 50%; /* Positionne au centre */
-        }
-
-        /* Texte d'introduction */
+        /* Effet de texte tapé pour l'introduction */
         .intro {
             font-size: 1.5em;
-            animation: typing 3s steps(30, end), blink 0.5s step-end infinite alternate;
             white-space: nowrap;
             overflow: hidden;
             border-right: 4px solid #00ff00;
             margin-top: 20px;
+            position: relative; /* Pour le positionnement */
+            z-index: 1; /* Mettre au-dessus du texte défilant */
         }
 
-        @keyframes typing {
-            from { width: 0; }
-            to { width: 100%; }
+        /* Terminal simulé */
+        .terminal {
+            background-color: rgba(0, 0, 0, 0.8);
+            padding: 20px;
+            margin: 20px auto;
+            width: 80%;
+            max-width: 600px;
+            color: #00ff00;
+            text-align: left;
+            font-size: 1em;
+            line-height: 1.5;
+            border: 1px solid #00ff00;
+            overflow: hidden;
+            white-space: pre-wrap;
+            position: relative; /* Pour le positionnement */
+            z-index: 1; /* Mettre au-dessus du texte défilant */
         }
 
-        @keyframes blink {
-            50% { border-color: transparent; }
+        /* Texte défilant */
+        .scrolling-numbers {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            color: rgba(0, 255, 0, 0.5);
+            font-size: 2em;
+            white-space: nowrap;
+            overflow: hidden;
+            z-index: 0; /* Derrière les autres éléments */
+        }
+
+        /* Lignes de chiffres */
+        .line {
+            position: absolute;
+            white-space: nowrap;
+            width: 100%; /* Remplit toute la largeur */
+            animation: scroll 5s linear infinite; /* Animation de défilement avec un temps plus long */
+        }
+
+        @keyframes scroll {
+            from { transform: translateY(100%); } /* Commence en bas */
+            to { transform: translateY(-100%); } /* Défile jusqu'en haut */
+        }
+
+        /* Barre de chargement */
+        .progress-container {
+            display: flex;
+            align-items: center;
+            width: 100%;
+            background-color: #333;
+            border: 1px solid #00ff00;
+            height: 20px;
+            margin-top: 10px;
+            overflow: hidden;
+            position: relative;
+        }
+
+        .progress-bar {
+            height: 100%;
+            background-color: #00ff00;
+            width: 0;
+            transition: width 0.1s;
+        }
+
+        .progress-percent {
+            color: #00ff00;
+            margin-left: 5px;
+            font-size: 1em;
         }
 
         /* Effet de bouton Discord */
@@ -80,6 +108,8 @@
             cursor: pointer;
             transition: box-shadow 0.3s ease, transform 0.2s;
             margin-top: 50px;
+            position: relative; /* Pour le positionnement */
+            z-index: 1; /* Mettre au-dessus du texte défilant */
         }
 
         .discord-button:hover {
@@ -104,94 +134,59 @@
             from { transform: scale(1); }
             to { transform: scale(1.1); }
         }
-
-        /* Terminal simulé avec effet de machine à écrire */
-        .terminal {
-            background-color: rgba(0, 0, 0, 0.8);
-            padding: 20px;
-            margin: 20px auto;
-            width: 80%;
-            max-width: 600px;
-            color: #00ff00;
-            text-align: left;
-            font-size: 1em;
-            line-height: 1.5;
-            border: 1px solid #00ff00;
-            overflow: hidden;
-            white-space: pre-wrap;
-            animation: fadeIn 2s ease;
-        }
-
-        /* Animation du texte ligne par ligne */
-        .line {
-            opacity: 0;
-            animation: typingLine 1.5s steps(30, end) forwards;
-        }
-
-        /* Délai d’apparition progressive des lignes */
-        .line:nth-child(1) { animation-delay: 0.5s; }
-        .line:nth-child(2) { animation-delay: 3s; }
-        .line:nth-child(3) { animation-delay: 5s; }
-        .line:nth-child(4) { animation-delay: 7s; }
-
-        @keyframes typingLine {
-            from { opacity: 0; width: 0; }
-            to { opacity: 1; width: 100%; }
-        }
     </style>
 </head>
 <body>
-    <!-- Fond de code en cascade -->
-    <div class="background-matrix">
-        <!-- Ajouter plusieurs lignes de chiffres pour un effet plein -->
-        <div class="matrix-line">1010101010101</div>
-        <div class="matrix-line">0101010101010</div>
-        <div class="matrix-line">1100101010101</div>
-        <div class="matrix-line">0110101010110</div>
-        <div class="matrix-line">1010101010101</div>
-        <div class="matrix-line">0101010101010</div>
-        <div class="matrix-line">1100101010101</div>
-        <div class="matrix-line">0110101010110</div>
-        <div class="matrix-line">1010101010101</div>
-        <div class="matrix-line">0101010101010</div>
-        <div class="matrix-line">1100101010101</div>
-        <div class="matrix-line">0110101010110</div>
-        <div class="matrix-line">1010101010101</div>
-        <div class="matrix-line">0101010101010</div>
-        <div class="matrix-line">1100101010101</div>
-        <div class="matrix-line">0110101010110</div>
-        <div class="matrix-line">1010101010101</div>
-        <div class="matrix-line">0101010101010</div>
-        <div class="matrix-line">1100101010101</div>
-        <div class="matrix-line">0110101010110</div>
-        <div class="matrix-line">1010101010101</div>
-        <div class="matrix-line">0101010101010</div>
-    </div>
-
-    <!-- Glow en fond -->
+    <!-- Fond lumineux -->
     <div class="glow-background"></div>
 
+    <!-- Texte défilant avec des chiffres -->
+    <div class="scrolling-numbers" id="scrolling-numbers"></div>
+
     <!-- Texte d’introduction -->
-    <div class="intro">Bienvenue dans le système... Analyse en cours...</div>
+    <div class="intro" id="intro">Bienvenue dans le système... Analyse en cours...</div>
 
     <!-- Terminal simulé avec effet machine à écrire -->
-    <div class="terminal">
-        <p class="line">&gt; Initialisation du système...</p>
-        <p class="line">&gt; Accès au serveur distant en cours...</p>
-        <p class="line">&gt; Chargement des protocoles de sécurité...</p>
-        <p class="line">&gt; Accès confirmé.</p>
-    </div>
+    <div class="terminal" id="terminal">
+        <p id="line1" style="display: none;">&gt; Initialisation du système...</p>
+        <p id="line2" style="display: none;">&gt; Accès au serveur distant en cours...</p>
+        <p id="line3" style="display: none;">&gt; Chargement des protocoles de sécurité...</p>
+        <p id="line4" style="display: none;">&gt; Accès confirmé.</p>
 
-    <!-- Fichiers audio -->
-    <audio id="buttonSound" src="c:\Users\gaspa\Desktop\site\clic.mp3"></audio>
-    
+        <!-- Barre de chargement fluide avec pourcentage -->
+        <div class="progress-container">
+            <div class="progress-bar" id="progress-bar"></div>
+            <span class="progress-percent" id="progress-percent">0%</span>
+        </div>
+    </div>
 
     <!-- Bouton Discord avec ouverture dans un nouvel onglet -->
     <button class="discord-button" onclick="playSound('buttonSound'); window.open('https://discord.com/users/1162459344005247047', '_blank')">
         Add me on Discord
     </button>
 
+    <!-- Fichiers audio -->
+    <audio id="buttonSound" src="clic.mp3"></audio>
+    <audio id="keyboardSound" src="clavier.mp3"></audio>
+
     <script>
+        // Fonction pour afficher un texte lettre par lettre
+        function typeText(element, text, speed, callback) {
+            let index = 0;
+
+            function type() {
+                if (index < text.length) {
+                    element.innerHTML += text.charAt(index);
+                    index++;
+                    playTypingSound();
+                    setTimeout(type, speed);
+                } else if (callback) {
+                    callback();
+                }
+            }
+            type();
+        }
+
         // Fonction pour jouer le son de clavier
         function playTypingSound() {
             const sound = document.getElementById('keyboardSound');
@@ -199,32 +194,92 @@
             sound.play();
         }
 
-        // Fonction pour jouer le son du bouton
-        function playSound(soundId) {
-            const sound = document.getElementById(soundId);
-            sound.currentTime = 0;
-            sound.play();
+        // Fonction pour afficher les lignes de terminal
+        function displayTerminalLines() {
+            const lines = [
+                document.getElementById('line1'),
+                document.getElementById('line2'),
+                document.getElementById('line3'),
+                document.getElementById('line4')
+            ];
+            let lineIndex = 0;
+
+            function showNextLine() {
+                if (lineIndex < lines.length) {
+                    const lineElement = lines[lineIndex];
+                    const lineText = lineElement.textContent;
+
+                    lineElement.style.display = "block";
+                    lineElement.textContent = "";
+                    
+                    // Lancer la barre de chargement dès que "Initialisation du système..." commence à s'afficher
+                    if (lineIndex === 0) startProgressBar();
+
+                    typeText(lineElement, lineText, 30, () => {
+                        lineIndex++;
+                        // Attendre que la barre de progression atteigne 100% avant de montrer la ligne suivante
+                        if (lineIndex < lines.length) {
+                            setTimeout(showNextLine, 300); // Ajuster selon la durée désirée
+                        }
+                    });
+                }
+            }
+
+            showNextLine();
         }
 
-        // Fonction pour démarrer le bruit de clavier dès l'ouverture de la page
-        function startTypingSounds() {
-            const interval = setInterval(playTypingSound, 500); // Joue le son toutes les 500 ms
+        // Fonction pour démarrer la barre de chargement et le pourcentage
+        function startProgressBar() {
+            const progressBar = document.getElementById("progress-bar");
+            const progressPercent = document.getElementById("progress-percent");
+            let progress = 0;
 
-            // Arrêter le son lorsque toutes les lignes sont affichées
-            const totalLines = document.querySelectorAll('.line').length;
-            const totalDuration = totalLines * 1500; // Calcule la durée totale en ms
+            const interval = setInterval(() => {
+                progress += 1;
+                progressBar.style.width = progress + "%";
+                progressPercent.textContent = progress + "%";
 
-            setTimeout(() => clearInterval(interval), totalDuration);
+                if (progress >= 100) {
+                    clearInterval(interval);
+                }
+            }, 50); // Vitesse de progression de la barre (deux fois plus rapide)
         }
 
-        // Lancer le son de clavier et les animations dès l'ouverture de la page
+        // Fonction pour générer plusieurs lignes de chiffres aléatoires
+        function generateRandomLines() {
+            const scrollingNumbersElement = document.getElementById('scrolling-numbers');
+            const lineCount = 5; // Nombre de lignes à générer
+
+            for (let i = 0; i < lineCount; i++) {
+                const line = document.createElement('div');
+                line.className = 'line';
+                line.style.top = (i * 20) + '%'; // Positionner chaque ligne avec un espacement
+                line.textContent = generateRandomNumberString();
+                scrollingNumbersElement.appendChild(line);
+            }
+        }
+
+        // Fonction pour générer une chaîne de chiffres aléatoires
+        function generateRandomNumberString() {
+            let result = '';
+            for (let i = 0; i < 50; i++) {
+                result += Math.floor(Math.random() * 10);
+            }
+            return result;
+        }
+
+        // Fonction pour lancer l'intro et ensuite afficher le terminal
         window.onload = () => {
-            startTypingSounds();
-            const lines = document.querySelectorAll('.line');
-            lines.forEach((line, index) => {
-                setTimeout(() => {
-                    line.classList.add('played');
-                }, index * 1500);
+            const introElement = document.getElementById("intro");
+            const introText = introElement.textContent;
+            introElement.textContent = "";
+
+            // Lancer la génération des lignes de chiffres défilants
+            generateRandomLines();
+
+            // Effet de texte pour l'intro puis lancer les lignes du terminal
+            typeText(introElement, introText, 50, () => {
+                displayTerminalLines();
             });
         };
     </script>
